@@ -1,46 +1,32 @@
-const express = require('express')
+import express, { json } from 'express';
 
 
 //Connect to the Database
-require('./mongoose')
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import './components/database/mongoDbConnection';
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT;
 
 //Users
-const Users = require('./models/users')
-const userRouter = require('./router/users')
-
+import userRouter from './src/components/organization/organization.routes';
 // Supplier
-const Supplier = require('./models/supplier')
-const supplierRouter = require('./router/supplier')
-
+import supplierRouter from './src/components/supplier/supplier.routes'
 // Authentication
-const auth = require('./middleware/auth')
-
+import auth from './src/middleware/middleware.auth'
 // Organization
-const Organization = require('./models/organization')
-const orgRouter = require('./router/organization')
-
+import orgRouter from './src/components/organization/organization.routes'
 // Product
-const Product = require('./models/products')
-const productRouter = require('./router/products')
-
+import productRouter from './src/components/product/product.routes'
 //Recipe
-const Recipe = require('./models/recipe')
-const recipeRouter = require('./router/recipe')
+import recipeRouter from './src/components/recipe/recipe.routes'
 
-app.use(express.json())
+app.use(json())
 
 app.use(userRouter)
-
 app.use(orgRouter)
-
 app.use(supplierRouter)
-
 app.use(productRouter)
-
 app.use(recipeRouter)
 
 app.listen(port, () => {console.log('Server is up on port ' + port)

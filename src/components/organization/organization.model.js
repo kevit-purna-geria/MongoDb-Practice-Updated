@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
-const validator = require('validator')
+import { Schema, model } from 'mongoose'
+import { isEmail } from 'validator'
 
-const userSchema = new mongoose.Schema({
+const orgSchema = new Schema({
     name : {
         type : String,
         required : true
@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
         lowercase: true,
         unique : true,
         validate(value) {
-            if (!validator.isEmail(value)) {
+            if (!isEmail(value)) {
                 throw new Error('Email is invalid')
             }
         }
@@ -28,22 +28,9 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Password cannot contain "password"')
             }
         }
-    },
-    token : {
-        type : String
-    },
-    supplier: { 
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Supplier"
-     }
+    } 
 })
 
-userSchema.virtual('Supplier', {
-    ref: 'Supplier',
-    localField: '_id',
-    foreignField: 'userId'
-})
+const Organization = model("Organization", orgSchema)
 
-const Users = mongoose.model("Users", userSchema)
-
-module.exports = Users
+export default Organization

@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
-const validator = require('validator')
+import { Schema, model } from 'mongoose'
+import { isEmail } from 'validator'
 
-const orgSchema = new mongoose.Schema({
+const registerSchema = new Schema({
     name : {
         type : String,
         required : true
@@ -13,7 +13,7 @@ const orgSchema = new mongoose.Schema({
         lowercase: true,
         unique : true,
         validate(value) {
-            if (!validator.isEmail(value)) {
+            if (!isEmail(value)) {
                 throw new Error('Email is invalid')
             }
         }
@@ -28,9 +28,9 @@ const orgSchema = new mongoose.Schema({
                 throw new Error('Password cannot contain "password"')
             }
         }
-    } 
+    }
 })
 
-const Organization = mongoose.model("Organization", orgSchema)
+const Register = model("Register", registerSchema)
 
-module.exports = Organization
+export default Register
