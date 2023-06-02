@@ -9,17 +9,17 @@ const productController = new ProductController()
 const router = Router();
 
 // Fetch all products
-router.get('/products', async (req, res) => {
+router.get('/products', auth, async (req, res) => {
   productController.viewProduct(req, res)
 });
 
-router.post('/add-product', async (req, res) => {
+router.post('/add-product', auth, async (req, res) => {
     productController.addProduct(req, res)
   });
   
 
 // Update a product
-router.put('/product:id', async (req, res) => {
+router.put('/product:id', auth, async (req, res) => {
   productController.updateProduct(req, res)
 });
 

@@ -21,7 +21,7 @@ router.get('/supplier', auth, async (req, res) => {
     supplierController.viewSupplier(req, res)
 })
 
-router.get('/suppliers/products', async (req, res) => {
+router.get('/suppliers/products', auth, async (req, res) => {
     supplierController.viewSuppliersProducts(req, res)
   });
 
